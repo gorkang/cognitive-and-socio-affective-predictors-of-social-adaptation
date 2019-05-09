@@ -11,7 +11,7 @@
 # Libraries and functions -------------------------------------------------
 
 if (!require('pacman')) install.packages('pacman'); library('pacman')
-p_load(tidyverse, psych, readr)
+p_load(tidyverse, psych, readr, DescTools)
 options(scipen = 999)
 
 # Functions

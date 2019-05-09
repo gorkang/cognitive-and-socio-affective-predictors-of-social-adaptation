@@ -76,7 +76,11 @@ cor.crystallized =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Crys
             omit.summary.stat = c("p25", "p75"),
             title = "Descriptive information of variables",
             out = "outputs/results/Table 1 - descriptives.tex")
-
+  
+  # Confidence intervals for descriptive statistics
+  names(DF_HR_TOTALS_DESCRIPTIVES) %>% 
+    map_df(~ MeanCI(DF_HR_TOTALS_DESCRIPTIVES[, .x] %>% unlist(), conf.level=0.95, na.rm = TRUE) %>% 
+             t() %>%  as_tibble() %>% mutate(name_variable = names(DF_HR_TOTALS_DESCRIPTIVES[.x])))
   
   
 
