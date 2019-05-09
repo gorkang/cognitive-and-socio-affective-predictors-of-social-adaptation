@@ -8,17 +8,17 @@
 str(DF_HR_FINAL)
 
 # Ages
-summary(DF_HR_TOTALS$dem_edad)
+summary(DF_HR_TOTALS$Age)
 # falta agrear cómo se calculó que el 95% se encontraba entre los 18 y 65 años de edad
-age_mean = DF_HR_FINAL %>% summarise(age_mean = mean(dem_edad)) %>% pull(age_mean)
+age_mean = DF_HR_FINAL %>% summarise(age_mean = mean(Age)) %>% pull(age_mean)
 cat("The mean age of the sample is", age_mean)
-age_sd = DF_HR_FINAL %>% summarise(age_sd = SD(dem_edad)) %>% pull(age_sd)
+age_sd = DF_HR_FINAL %>% summarise(age_sd = SD(Age)) %>% pull(age_sd)
 cat("The standard deviation of age of the sample is", age_sd)
-quantile(DF_HR_TOTALS$dem_edad, prob = seq(0, 1, length = 20), type = 5) 
+quantile(DF_HR_TOTALS$Age, prob = seq(0, 1, length = 20), type = 5) 
 cat("94.7% of the sample was between 18 and 65 years old")
 
 # Education Level
-summary(DF_HR_TOTALS$dem_nivedu)
+summary(DF_HR_TOTALS$`Education Level`)
 table2 # subjects with each level of education
 percentage = table2 %>% select(Freq)*100/232 #percentage of the sample with each level of education
 

@@ -11,7 +11,7 @@
 # Libraries and functions -------------------------------------------------
 
 if (!require('pacman')) install.packages('pacman'); library('pacman')
-p_load(tidyverse, psych, readr, DescTools)
+p_load(tidyverse, psych, readr)
 options(scipen = 999)
 
 # Functions
@@ -198,7 +198,7 @@ temp_WVOC_alpha = DF %>%
         
         # Add to local dataframe
         temp2 = temp_bfbs_alpha2 %>% 
-                 mutate(`Logic Reasoning` = rowSums(.))
+                 mutate(`Logical Reasoning` = rowSums(.))
 
         # Add to final dataframe
         DF_HR_FINAL = DF_HR_FINAL %>% cbind(temp2)
@@ -478,7 +478,7 @@ temp_WVOC_alpha = DF %>%
             `Crystallized Intelligence`,
             `Self-Esteem`,
             `Internal Locus`,
-            `Logic Reasoning`,
+            `Logical Reasoning`,
             `Anxious Attachment`,
             `Social Adaptation`,
             `Stress`,
@@ -486,9 +486,10 @@ temp_WVOC_alpha = DF %>%
             `Probabilistic Reasoning`,
             `Working Memory`,
             matches("dem"),
-            "ID"
-          )
-        
+            "ID") %>% 
+          rename(Sex = "dem_genero",
+                 Age = "dem_edad",
+                 `Education Level` = "dem_nivedu")
         
         tail(DF_HR_FINAL)
         

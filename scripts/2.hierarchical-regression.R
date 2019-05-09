@@ -12,7 +12,7 @@
   p_load(QuantPsyc, AutoModel, lmSupport)
   
     detach("package:QuantPsyc", unload = TRUE)
-    detach("package:MASS", unload = TRUE)
+    detach("package:MASS", unload = TRUE, force = TRUE)
 
   if (!require('pacman')) install.packages('pacman'); library('pacman')
   p_load(car, corrplot, apaTables, Rmisc, stargazer, sjPlot)
@@ -28,16 +28,16 @@
       `Crystallized Intelligence`,
       `Self-Esteem`,
       `Internal Locus`,
-      `Logic Reasoning`,
+      `Logical Reasoning`,
       `Anxious Attachment`,
       `Social Adaptation`,
       `Stress`,
       `Numeracy`,
       `Probabilistic Reasoning`,
       `Working Memory`,
-      dem_genero,
-      dem_edad,
-      dem_nivedu
+      Sex,
+      Age,
+      `Education Level`
     ) %>%
     as_tibble()
   
@@ -53,7 +53,7 @@
     `Working Memory`,
     `Fluid Intelligence`,
     `Crystallized Intelligence`,
-    `Logic Reasoning`,
+    `Logical Reasoning`,
     `Probabilistic Reasoning`,
     `Numeracy`
   )
@@ -67,13 +67,13 @@
   # Regression for the cognitive variables
   Cognitive =
     lm(
-      `Social Adaptation` ~ `Working Memory` + `Fluid Intelligence` + `Crystallized Intelligence` + `Logic Reasoning` + `Probabilistic Reasoning` + `Numeracy`,
+      `Social Adaptation` ~ `Working Memory` + `Fluid Intelligence` + `Crystallized Intelligence` + `Logical Reasoning` + `Probabilistic Reasoning` + `Numeracy`,
       data = DF_HR_TOTALS_na_dropped
     )
   
   # Hierarchical model
   Complete = lm(
-    `Social Adaptation` ~ `Internal Locus` + `Self-Esteem` + `Anxious Attachment` + `Stress` + `Working Memory` + `Fluid Intelligence` + `Crystallized Intelligence` + `Logic Reasoning` + `Probabilistic Reasoning` + `Numeracy`,
+    `Social Adaptation` ~ `Internal Locus` + `Self-Esteem` + `Anxious Attachment` + `Stress` + `Working Memory` + `Fluid Intelligence` + `Crystallized Intelligence` + `Logical Reasoning` + `Probabilistic Reasoning` + `Numeracy`,
     data = DF_HR_TOTALS_na_dropped
   )
   
@@ -129,7 +129,7 @@
       "Working Memory",
       "Fluid Intelligence",
       "Cryst. Intelligence",
-      "Logic Reasoning",
+      "Logical Reasoning",
       "Prob. Reasoning",
       "Numeracy"
     ),
@@ -177,7 +177,3 @@
   }
   
   write_lines(text_table_x, "outputs/results/Table 3 - hierarchical regression_std.tex")
-  
-  
-
-  

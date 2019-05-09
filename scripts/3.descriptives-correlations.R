@@ -8,7 +8,7 @@
 # Libraries and functions -------------------------------------------------
   
   if (!require('pacman')) install.packages('pacman'); library('pacman')
-  p_load(corrplot, dplyr, stargazer, sjPlot, apaTables, Rmisc, Hmisc, xtable) #sjstats, apaStyle
+  p_load(corrplot, dplyr, stargazer, sjPlot, apaTables, Rmisc, Hmisc, xtable, DescTools) #sjstats, apaStyle
 
 
 
@@ -24,7 +24,7 @@
            `Working Memory`,
            `Fluid Intelligence`,
            `Crystallized Intelligence`,
-           `Logic Reasoning`,
+           `Logical Reasoning`,
            `Probabilistic Reasoning`,
            `Numeracy`) %>% filter(complete.cases(.))
   
@@ -40,7 +40,7 @@ cor.wm =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Working Memory
 cor.probabilistic =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Probabilistic Reasoning`, method=c("pearson"))
 cor.fluid =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Fluid Intelligence`, method=c("pearson"))
 cor.numeracy =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$Numeracy, method=c("pearson"))
-cor.logic =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Logic Reasoning`, method=c("pearson"))
+cor.logic =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Logical Reasoning`, method=c("pearson"))
 cor.crystallized =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Crystallized Intelligence`, method=c("pearson"))
 
 
@@ -56,14 +56,13 @@ cor.crystallized =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Crys
            `Working Memory`,
            `Fluid Intelligence`,
            `Crystallized Intelligence`,
-           `Logic Reasoning`,
+           `Logical Reasoning`,
            `Probabilistic Reasoning`,
            `Numeracy`,
-           dem_genero,
-           dem_edad,
-           dem_nivedu) %>% 
-     as_tibble()  %>% 
-    rename_("Age" = "dem_edad")
+           Sex,
+           Age,
+           `Education Level`) %>% 
+     as_tibble()
   
   
   summary(DF_HR_TOTALS)
@@ -86,20 +85,20 @@ cor.crystallized =  cor.test(DF_HR_FINAL$`Social Adaptation`,  DF_HR_FINAL$`Crys
 
 # Frequencies for education and sex ---------------------------------------
 
-  educ <- as.factor(DF_HR_FINAL$dem_nivedu) %>% chisq.test(DF_HR_FINAL$dem_nivedu, simulate.p.value = TRUE)
-  demos <- DF_HR_FINAL %>% select(dem_nivedu, dem_genero)
+  educ <- as.factor(DF_HR_FINAL$`Education Level`) %>% chisq.test(DF_HR_FINAL$`Education Level`, simulate.p.value = TRUE)
+  demos <- DF_HR_FINAL %>% select(`Education Level`, Sex)
   
   #Age
-  quantile(DF_HR_TOTALS$dem_edad, prob = seq(0, 1, length = 20), type = 5) # Calculate decils of age
+  quantile(DF_HR_TOTALS$Age, prob = seq(0, 1, length = 20), type = 5) # Calculate decils of age
   
   # Sex
-  demos$dem_genero <- factor(demos$dem_genero)
-  table1 <- table(demos$dem_genero)
+  demos$Sex <- factor(demos$Sex)
+  table1 <- table(demos$Sex)
   table1 <- as.data.frame(table1)
   
   # Education
-  demos$dem_nivedu <- factor(demos$dem_nivedu)
-  table2 <- table(demos$dem_nivedu)
+  demos$`Education Level` <- factor(demos$`Education Level`)
+  table2 <- table(demos$`Education Level`)
   table2 <- as.data.frame(table2)
   
 # Correlation Table Latex ------------------------------------------------------------
