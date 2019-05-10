@@ -1,6 +1,6 @@
 # should be run after source("2.results-hierarchical-regression.R")
 
-# This script generate the plot of the hierarchical regression analysis
+# This script generates the plot of the hierarchical regression analysis and a table with the standardized cofficients of the hierarchical regression
 
 
 # Libraries and functions -------------------------------------------------
@@ -88,4 +88,17 @@
          units="in",
          dpi = 300, 
          compression = "lzw")
+  
+  
+  # Hierarchical Regression table with standardized values ------------------
+  
+  
+  install.packages("snakecase")
+  library(sjPlot)
+  library(sjmisc)
+  library(sjlabelled)
+  tab_model(Cognitive, Socioaffective, Complete, 
+            dv.labels = c("Cognitive", "Socioaffective", "Complete"),
+            p.style = "numeric", # both
+            show.std = TRUE, show.est = TRUE, show.r2 = TRUE)
   

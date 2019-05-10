@@ -3,7 +3,7 @@
 # 1. Hierarchical analysis is conducted
 # 2. Assumption checks are evaluated (normality and multi-collinearity)
 # 3. Latex tabel of hierarchical analysis is generated
-# 4. Latex table of hierarchical analysis with standardized betas is generated
+# 4. Latex table of hierarchical analysis with non-standardized betas is generated
 
 # Libraries and functions -------------------------------------------------
 
@@ -139,41 +139,5 @@
     out = "outputs/results/Table 3 - hierarchical regression_non-std.tex"
   )
 
+  # For a table with standardized values for the hierarchical regression see script "4.results-plots.R"
   
-  # The following replaces the beta coefficient in the latex table with beta standadized values
-  complete_names <- Complete$coefficients %>% names
-  compa_df <- 
-  Complete$coefficients %>% 
-    as.tibble() %>% 
-    bind_cols(as.tibble(complete_names))
-  
-  Complete_std_names <- Complete_std %>% names
-  compa_std_df <- 
-    Complete_std %>% 
-    as.tibble() %>% 
-    bind_cols(as.tibble(Complete_std_names))
-  
-  all_beta <- 
-    compa_df %>% full_join(compa_std_df, "value1") %>% 
-    set_names(., c("no_std", "test", "std")) %>% 
-    filter(!test == "(Intercept)") %>% as.data.frame()
-  
-  all_beta <- 
-    all_beta %>% 
-    select(-test) %>% 
-    mutate(no_std = round(no_std, 3), 
-           std = round(std, 3))
-  
-  text_table <- readChar("outputs/results/Table 3 - hierarchical regression_non-std.tex", file.size("outputs/results/Table 3 - hierarchical regression_non-std.tex"))
-  
-  text_table_x <- text_table
-
-  for (i in 1:nrow(all_beta)) {
-    # i <- 1
-    a <- format(round(all_beta$no_std[i], 3), nsmall = 3)
-    b <- format(round(all_beta$std[i], 3), nsmall = 3)
-    
-    text_table_x <- gsub(a, b, text_table_x)
-  }
-  
-  write_lines(text_table_x, "outputs/results/Table 3 - hierarchical regression_std.tex")
